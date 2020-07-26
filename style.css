@@ -1,0 +1,16 @@
+h1 {
+    background-color: lightseagreen;
+    text-align: center;
+    color: white;
+}
+
+table, th, td {
+    border: 1px solid black;
+    width: 1200px;
+  }
+
+
+  .text {
+      color: black;
+      font-size: large;
+  }
