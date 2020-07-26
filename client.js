@@ -2,6 +2,10 @@ console.log('JS loaded');
 
 $(document).ready(handleReady);
 
+let totalMonthlySalary = 0;
+
+employeesSalaryArray = [];
+
 function handleReady(){
     $('#submitBtn').on('click', addEmployee);
     $('#employeeTable').on('click', '.deleteBtn', deleteEmployee);
@@ -15,8 +19,8 @@ function addEmployee(){
         employeeId : $('#idField').val(),
         jobTitle : $('#titleField').val(),
         annualSalary : $('#salaryField').val()
-
     }
+    employeesSalaryArray.push(employeesInfo.annualSalary);
 
     employeeToTable(employeesInfo)
     $('#firstName').val('');
@@ -29,20 +33,41 @@ function addEmployee(){
 function employeeToTable(employee){
     $('#employeeTable').append(`
     <tr>
-    ${Object.values(employee).forEach((value) => {
-        $('#employeeTable').append(`
-        <td>
-        ${value}
-        </td>
-        `)
-    })}
+    <td>
+    ${employee.firstName}
+    </td>
+    <td>
+    ${employee.lastName}
+    </td>
+    <td>
+    ${employee.employeeId}
+    </td>
+    <td>
+    ${employee.jobTitle}
+    </td>
+    <td>
+    ${employee.annualSalary}
+    </td>
     <td>
     <button class='deleteBtn'>Delete</button>
     </td>
     </tr>
-    `)
-};
+    `
+    )
+    updateTotal();
+}
 
 function deleteEmployee(){
     $(this).closest('tr').remove();
+}
+
+function updateTotal(){
+    for (let i = 0; i < employeesSalaryArray.length; i++){
+        totalMonthlySalary += parseInt(employeesSalaryArray[i]);
+    }
+    $('#monthlyTotal').replaceWith(`Total Monthly: ${totalMonthlySalary}`)
+    if (totalMonthlySalary > 20000){
+        $('#monthlyTotal').addClass('red')
+    };
+
 }
